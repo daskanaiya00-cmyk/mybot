@@ -1,0 +1,1109 @@
+A
+    <!-- Google Fonts: Outfit & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        outfit: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        gemini: {
+                            bg: '#131314',
+                            sidebar: '#1e1f20',
+                            card: '#1e1f20',
+                            cardHover: '#282a2c',
+                            input: '#1e1f20',
+                            accent: '#a8c7fa',
+                            accentHover: '#7cacf8',
+                            userBubble: '#282a2c',
+                            border: '#37393b',
+                            lightBg: '#f0f4f9',
+                            lightSidebar: '#f0f4f9',
+                            lightCard: '#ffffff',
+                            lightBorder: '#e3e3e3'
+                        }
+                    },
+                    keyframes: {
+                        gradientShift: {
+                            '0%, 100%': { 'background-position': '0% 50%' },
+                            '50%': { 'background-position': '100% 50%' },
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { opacity: '0.4' },
+                            '50%': { opacity: '0.8' },
+                        }
+                    },
+                    animation: {
+                        'gradient-text': 'gradientShift 6s ease infinite',
+                        'pulse-glow': 'pulseGlow 3s ease-in-out infinite',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Marked.js for Markdown parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <!-- Highlight.js for Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+    <style>
+        /* Custom scrollbars */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(155, 155, 155, 0.25);
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(155, 155, 155, 0.4);
+        }
+
+        /* Glassmorphism & Gradient Effects */
+        .glass-panel {
+            background: rgba(30, 31, 32, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+        .light .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        .gemini-gradient-text {
+            background: linear-gradient(74deg, #4285f4, #9b51e0 35%, #e91e63 70%, #fbbc05);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Dynamic background glows */
+        .bg-radial-glow {
+            background: radial-gradient(circle at 50% 0%, rgba(66, 133, 244, 0.08), transparent 60%);
+        }
+
+        /* Prose styling for rendered AI responses */
+        .markdown-body {
+            color: inherit;
+            font-size: 0.975rem;
+            line-height: 1.65;
+        }
+        .markdown-body p {
+            margin-bottom: 0.85rem;
+        }
+        .markdown-body p:last-child {
+            margin-bottom: 0;
+        }
+        .markdown-body h1, .markdown-body h2, .markdown-body h3, .markdown-body h4 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            margin-top: 1.25rem;
+            margin-bottom: 0.6rem;
+            color: currentColor;
+        }
+        .markdown-body h1 { font-size: 1.5rem; }
+        .markdown-body h2 { font-size: 1.25rem; }
+        .markdown-body h3 { font-size: 1.1rem; }
+        .markdown-body ul, .markdown-body ol {
+            padding-left: 1.25rem;
+            margin-bottom: 0.85rem;
+        }
+        .markdown-body ul { list-style-type: disc; }
+        .markdown-body ol { list-style-type: decimal; }
+        .markdown-body li { margin-bottom: 0.25rem; }
+        .markdown-body blockquote {
+            border-left: 3px solid #4285f4;
+            padding-left: 0.85rem;
+            margin-top: 0.85rem;
+            margin-bottom: 0.85rem;
+            opacity: 0.85;
+            font-style: italic;
+        }
+        .markdown-body code:not(pre code) {
+            background-color: rgba(110, 118, 129, 0.18);
+            padding: 0.2em 0.4em;
+            border-radius: 6px;
+            font-size: 0.875em;
+            font-family: monospace;
+        }
+        .markdown-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+        .markdown-body th, .markdown-body td {
+            border: 1px solid rgba(150, 150, 150, 0.2);
+            padding: 0.5rem 0.75rem;
+            text-align: left;
+        }
+        .markdown-body th {
+            background-color: rgba(150, 150, 150, 0.1);
+        }
+
+        /* Pulse animation for active voice recording */
+        @keyframes pulse-ring {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+        .mic-active {
+            animation: pulse-ring 1.8s infinite;
+        }
+    </style>
+</head>
+<body class="bg-gemini-bg dark:bg-gemini-bg dark:text-gray-100 text-gray-800 font-sans transition-colors duration-200 min-h-screen flex flex-col overflow-hidden">
+
+    <div id="app" class="flex h-screen w-full relative overflow-hidden">
+
+        <!-- Mobile Overlay Backdrop -->
+        <div id="mobileBackdrop" class="fixed inset-0 bg-black/60 z-30 hidden md:hidden backdrop-blur-sm transition-opacity" onclick="toggleSidebar()"></div>
+
+        <!-- LEFT SIDEBAR -->
+        <aside id="sidebar" class="fixed md:static inset-y-0 left-0 z-40 w-72 bg-gemini-sidebar dark:bg-gemini-sidebar border-r border-gray-200 dark:border-gemini-border flex flex-col transition-transform duration-300 ease-in-out -translate-x-full md:translate-x-0 shrink-0">
+            <!-- Sidebar Header -->
+            <div class="p-4 flex items-center justify-between">
+                <button onclick="toggleSidebar()" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gemini-cardHover text-gray-600 dark:text-gray-300 transition" title="Collapse Menu">
+                    <i data-lucide="menu" class="w-5 h-5"></i>
+                </button>
+                <button onclick="createNewThread()" class="flex items-center gap-2 px-4 py-2.5 rounded-full bg-gemini-card hover:bg-gemini-cardHover dark:bg-gemini-card dark:hover:bg-gemini-cardHover text-sm font-medium text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gemini-border shadow-sm transition-all hover:shadow">
+                    <i data-lucide="plus" class="w-4 h-4 text-gemini-accent"></i>
+                    <span>New Chat</span>
+                </button>
+            </div>
+
+            <!-- Recent Conversations List -->
+            <div class="flex-1 overflow-y-auto px-3 py-2 space-y-1">
+                <div class="px-3 py-2 text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">
+                    Recent
+                </div>
+                <div id="threadsList" class="space-y-1">
+                    <!-- Threads populated dynamically -->
+                </div>
+            </div>
+
+            <!-- Sidebar Footer Settings & Status -->
+            <div class="p-3 border-t border-gray-200 dark:border-gemini-border space-y-1">
+                <button onclick="openSettingsModal()" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm hover:bg-gray-200 dark:hover:bg-gemini-cardHover text-gray-700 dark:text-gray-300 transition">
+                    <i data-lucide="settings" class="w-4 h-4"></i>
+                    <span class="flex-1 text-left">Settings & API Key</span>
+                    <span id="apiKeyBadge" class="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-medium">Demo</span>
+                </button>
+                <button onclick="toggleTheme()" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm hover:bg-gray-200 dark:hover:bg-gemini-cardHover text-gray-700 dark:text-gray-300 transition">
+                    <i id="themeIcon" data-lucide="moon" class="w-4 h-4"></i>
+                    <span id="themeText" class="flex-1 text-left">Dark Mode</span>
+                </button>
+                <div class="px-3 py-2 text-[11px] text-gray-500 flex items-center justify-between">
+                    <span>Gemini 2.5 Pro & Flash</span>
+                    <span class="inline-block w-2 h-2 rounded-full bg-emerald-500" title="System Ready"></span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN CHAT CONTENT AREA -->
+        <main class="flex-1 flex flex-col h-full min-w-0 bg-white dark:bg-gemini-bg relative bg-radial-glow transition-colors duration-200">
+            
+            <!-- Top Navigation Bar -->
+            <header class="h-16 px-4 flex items-center justify-between border-b border-gray-100 dark:border-gemini-border/40 shrink-0 z-10 glass-panel">
+                <div class="flex items-center gap-3">
+                    <button onclick="toggleSidebar()" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gemini-cardHover text-gray-600 dark:text-gray-300" title="Toggle Sidebar">
+                        <i data-lucide="menu" class="w-5 h-5"></i>
+                    </button>
+                    <!-- Gemini Sparkle Brand -->
+                    <div class="flex items-center gap-2 cursor-pointer" onclick="createNewThread()">
+                        <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-blue-600 via-indigo-500 to-amber-400 flex items-center justify-center shadow-md">
+                            <i data-lucide="sparkles" class="w-5 h-5 text-white"></i>
+                        </div>
+                        <span class="font-outfit font-bold text-xl tracking-tight text-gray-900 dark:text-white flex items-center gap-1.5">
+                            Gemini <span class="text-xs font-normal px-2 py-0.5 rounded-full bg-gemini-accent/20 text-gemini-accent border border-gemini-accent/30">2.5</span>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Model Selector Dropdown -->
+                <div class="flex items-center gap-2">
+                    <div class="relative">
+                        <select id="modelSelect" onchange="updateSelectedModel()" class="appearance-none bg-gray-100 dark:bg-gemini-card border border-gray-200 dark:border-gemini-border text-gray-800 dark:text-gray-200 text-xs font-medium rounded-full px-4 py-2 pr-8 hover:bg-gray-200 dark:hover:bg-gemini-cardHover transition cursor-pointer focus:outline-none focus:ring-2 focus:ring-gemini-accent/50">
+                            <option value="gemini-2.5-flash">Gemini 2.5 Flash (Fast & Multimodal)</option>
+                            <option value="gemini-2.5-pro">Gemini 2.5 Pro (Advanced Reasoning)</option>
+                            <option value="gemini-3-flash-preview">Gemini 3.0 Flash (Next Gen)</option>
+                        </select>
+                        <i data-lucide="chevron-down" class="w-3.5 h-3.5 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400"></i>
+                    </div>
+
+                    <!-- Quick Settings Action Button -->
+                    <button onclick="openSettingsModal()" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gemini-cardHover text-gray-600 dark:text-gray-300" title="API Settings">
+                        <i data-lucide="key" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Chat Scroll View -->
+            <div id="chatContainer" class="flex-1 overflow-y-auto px-4 md:px-0 py-6 scroll-smooth">
+                <div class="max-w-3xl mx-auto space-y-6 pb-28">
+
+                    <!-- EMPTY STATE / WELCOME HERO SCREEN -->
+                    <div id="welcomeView" class="py-12 md:py-20 flex flex-col items-start space-y-8 animate-fade-in">
+                        <div class="space-y-2">
+                            <h1 class="text-4xl md:text-6xl font-outfit font-extrabold tracking-tight">
+                                <span class="gemini-gradient-text animate-gradient-text">Hello, Creator</span>
+                            </h1>
+                            <p class="text-2xl md:text-3xl font-outfit font-medium text-gray-400 dark:text-gray-500">
+                                How can I help you today?
+                            </p>
+                        </div>
+
+                        <!-- Action Suggestion Cards Grid -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 w-full pt-4">
+                            <button onclick="usePromptSuggestion('Write a clean Python script for data processing and saving to JSON.')" class="p-4 rounded-2xl bg-gray-50 dark:bg-gemini-card hover:bg-gray-100 dark:hover:bg-gemini-cardHover border border-gray-200 dark:border-gemini-border text-left transition-all duration-200 group flex flex-col justify-between h-36 shadow-sm hover:shadow-md">
+                                <p class="text-xs font-medium text-gray-700 dark:text-gray-300 group-hover:text-blue-500 transition-colors line-clamp-3">
+                                    Write a clean Python script for processing structured JSON data
+                                </p>
+                                <div class="self-end p-2 rounded-full bg-blue-500/10 text-blue-500 group-hover:bg-blue-500 group-hover:text-white transition">
+                                    <i data-lucide="code" class="w-4 h-4"></i>
+                                </div>
+                            </button>
+
+                            <button onclick="usePromptSuggestion('Brainstorm 5 innovative startup ideas combining AI and green renewable energy.')" class="p-4 rounded-2xl bg-gray-50 dark:bg-gemini-card hover:bg-gray-100 dark:hover:bg-gemini-cardHover border border-gray-200 dark:border-gemini-border text-left transition-all duration-200 group flex flex-col justify-between h-36 shadow-sm hover:shadow-md">
+                                <p class="text-xs font-medium text-gray-700 dark:text-gray-300 group-hover:text-amber-500 transition-colors line-clamp-3">
+                                    Brainstorm innovative AI startup concepts for green energy
+                                </p>
+                                <div class="self-end p-2 rounded-full bg-amber-500/10 text-amber-500 group-hover:bg-amber-500 group-hover:text-white transition">
+                                    <i data-lucide="lightbulb" class="w-4 h-4"></i>
+                                </div>
+                            </button>
+
+                            <button onclick="usePromptSuggestion('Draft a polite professional email asking for project timeline updates.')" class="p-4 rounded-2xl bg-gray-50 dark:bg-gemini-card hover:bg-gray-100 dark:hover:bg-gemini-cardHover border border-gray-200 dark:border-gemini-border text-left transition-all duration-200 group flex flex-col justify-between h-36 shadow-sm hover:shadow-md">
+                                <p class="text-xs font-medium text-gray-700 dark:text-gray-300 group-hover:text-emerald-500 transition-colors line-clamp-3">
+                                    Draft a polite professional email requesting a project update
+                                </p>
+                                <div class="self-end p-2 rounded-full bg-emerald-500/10 text-emerald-500 group-hover:bg-emerald-500 group-hover:text-white transition">
+                                    <i data-lucide="pen-tool" class="w-4 h-4"></i>
+                                </div>
+                            </button>
+
+                            <button onclick="usePromptSuggestion('Explain Quantum Computing simply using an everyday kitchen analogy.')" class="p-4 rounded-2xl bg-gray-50 dark:bg-gemini-card hover:bg-gray-100 dark:hover:bg-gemini-cardHover border border-gray-200 dark:border-gemini-border text-left transition-all duration-200 group flex flex-col justify-between h-36 shadow-sm hover:shadow-md">
+                                <p class="text-xs font-medium text-gray-700 dark:text-gray-300 group-hover:text-purple-500 transition-colors line-clamp-3">
+                                    Explain complex concepts like Quantum Computing simply
+                                </p>
+                                <div class="self-end p-2 rounded-full bg-purple-500/10 text-purple-500 group-hover:bg-purple-500 group-hover:text-white transition">
+                                    <i data-lucide="compass" class="w-4 h-4"></i>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- ACTIVE MESSAGES CONTAINER -->
+                    <div id="messagesList" class="space-y-6">
+                        <!-- Messages dynamically appended here -->
+                    </div>
+
+                    <!-- STREAMING THINKING INDICATOR -->
+                    <div id="typingIndicator" class="hidden flex items-start gap-3">
+                        <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-500 to-indigo-600 flex items-center justify-center shrink-0 shadow">
+                            <i data-lucide="sparkles" class="w-4 h-4 text-white animate-spin"></i>
+                        </div>
+                        <div class="flex items-center gap-1.5 py-2 px-3 rounded-2xl bg-gray-100 dark:bg-gemini-card text-gray-400">
+                            <span class="w-2 h-2 rounded-full bg-gemini-accent animate-bounce"></span>
+                            <span class="w-2 h-2 rounded-full bg-gemini-accent animate-bounce [animation-delay:0.2s]"></span>
+                            <span class="w-2 h-2 rounded-full bg-gemini-accent animate-bounce [animation-delay:0.4s]"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FLOATING INPUT CONTROL BAR -->
+            <div class="absolute bottom-0 inset-x-0 p-4 bg-gradient-to-t from-white via-white/90 to-transparent dark:from-gemini-bg dark:via-gemini-bg/90 dark:to-transparent pt-6 pointer-events-none">
+                <div class="max-w-3xl mx-auto pointer-events-auto">
+                    
+                    <div id="inputBox" class="bg-gray-100 dark:bg-gemini-input border border-gray-200 dark:border-gemini-border rounded-3xl p-3 shadow-lg focus-within:ring-2 focus-within:ring-gemini-accent/40 focus-within:border-gemini-accent transition-all duration-200">
+                        
+                        <!-- Image Attachment Preview Thumbnail Bar -->
+                        <div id="attachmentPreview" class="hidden flex flex-wrap gap-2 pb-2 mb-2 border-b border-gray-200 dark:border-gemini-border">
+                            <!-- Dynamically generated attachment chips -->
+                        </div>
+
+                        <!-- Textarea & Action Controls -->
+                        <div class="flex items-end gap-2">
+                            
+                            <!-- File Upload Button -->
+                            <button onclick="triggerFileUpload()" class="p-2.5 rounded-full hover:bg-gray-200 dark:hover:bg-gemini-cardHover text-gray-500 dark:text-gray-400 transition shrink-0" title="Attach Image">
+                                <i data-lucide="image" class="w-5 h-5"></i>
+                            </button>
+                            <input type="file" id="fileInput" accept="image/*" class="hidden" onchange="handleFileSelect(event)">
+
+                            <!-- Auto-resizing Input Area -->
+                            <textarea id="promptInput" rows="1" placeholder="Ask Gemini..." oninput="autoResizeTextarea(this)" onkeydown="handleKeyDown(event)" class="flex-1 bg-transparent border-0 resize-none outline-none text-sm md:text-base text-gray-800 dark:text-gray-100 placeholder-gray-400 max-h-48 py-1.5 px-1 font-sans"></textarea>
+
+                            <!-- Speech Dictation Button -->
+                            <button id="micBtn" onclick="toggleVoiceInput()" class="p-2.5 rounded-full hover:bg-gray-200 dark:hover:bg-gemini-cardHover text-gray-500 dark:text-gray-400 transition shrink-0" title="Voice Input">
+                                <i data-lucide="mic" class="w-5 h-5"></i>
+                            </button>
+
+                            <!-- Send Button -->
+                            <button id="sendBtn" onclick="sendMessage()" class="p-2.5 rounded-full bg-gemini-accent hover:bg-gemini-accentHover text-gray-900 transition disabled:opacity-40 disabled:cursor-not-allowed shrink-0 shadow-md">
+                                <i data-lucide="send" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Subtext Disclaimer -->
+                    <p class="text-[11px] text-center text-gray-400 dark:text-gray-500 mt-2">
+                        Gemini may display inaccurate info, including about people, so double-check its responses.
+                    </p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- SETTINGS & API KEY MODAL -->
+    <div id="settingsModal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm animate-fade-in">
+        <div class="bg-white dark:bg-gemini-card border border-gray-200 dark:border-gemini-border rounded-3xl w-full max-w-md p-6 shadow-2xl space-y-5">
+            <div class="flex items-center justify-between border-b border-gray-100 dark:border-gemini-border pb-3">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="key" class="w-5 h-5 text-gemini-accent"></i>
+                    <h3 class="font-outfit font-bold text-lg text-gray-900 dark:text-white">Gemini Settings</h3>
+                </div>
+                <button onclick="closeSettingsModal()" class="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gemini-cardHover text-gray-400">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider mb-1">
+                        Google Gemini API Key
+                    </label>
+                    <input type="password" id="apiKeyInput" placeholder="AIzaSy..." class="w-full px-3.5 py-2.5 rounded-xl bg-gray-50 dark:bg-gemini-input border border-gray-300 dark:border-gemini-border text-sm focus:outline-none focus:ring-2 focus:ring-gemini-accent/50 text-gray-800 dark:text-white">
+                    <p class="text-xs text-gray-400 mt-1.5">
+                        Saved locally in your browser. If empty, app operates in interactive demo simulation mode.
+                    </p>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider mb-1">
+                        System Instructions
+                    </label>
+                    <textarea id="systemPromptInput" rows="3" placeholder="You are a helpful, expert AI assistant..." class="w-full px-3.5 py-2.5 rounded-xl bg-gray-50 dark:bg-gemini-input border border-gray-300 dark:border-gemini-border text-sm focus:outline-none focus:ring-2 focus:ring-gemini-accent/50 text-gray-800 dark:text-white resize-none"></textarea>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-between pt-2">
+                <button onclick="clearAllData()" class="text-xs text-rose-500 hover:text-rose-600 font-medium">
+                    Clear History & Key
+                </button>
+                <button onclick="saveSettings()" class="px-5 py-2 rounded-full bg-gemini-accent hover:bg-gemini-accentHover text-gray-900 font-semibold text-sm shadow transition">
+                    Save Changes
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION FLOATING CONTAINER -->
+    <div id="toast" class="fixed bottom-20 left-1/2 -translate-x-1/2 bg-gray-900 dark:bg-gemini-card text-white px-4 py-2 rounded-full text-xs shadow-xl border border-gray-700 flex items-center gap-2 opacity-0 pointer-events-none transition-opacity duration-300 z-50">
+        <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i>
+        <span id="toastMsg">Action completed</span>
+    </div>
+
+    <!-- JAVASCRIPT APPLICATION LOGIC -->
+    <script>
+        // State variables
+        let threads = [];
+        let activeThreadId = null;
+        let apiKey = localStorage.getItem('gemini_api_key') || '';
+        let selectedModel = localStorage.getItem('gemini_selected_model') || 'gemini-2.5-flash';
+        let systemPrompt = localStorage.getItem('gemini_system_prompt') || 'You are Gemini, a large language model built by Google. Be helpful, concise, accurate, and articulate.';
+        let pendingAttachments = []; // Array of base64 images
+        let isGenerating = false;
+        let speechSynth = window.speechSynthesis;
+        let speechUtterance = null;
+        let recognition = null;
+        let isMicActive = false;
+
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Configure Marked with custom code syntax highlighter & top bar header
+        marked.setOptions({
+            highlight: function(code, lang) {
+                const validLang = hljs.getLanguage(lang) ? lang : 'plaintext';
+                return hljs.highlight(code, { language: validLang }).value;
+            },
+            breaks: true
+        });
+
+        // Custom renderer override for code blocks
+        const renderer = new marked.Renderer();
+        renderer.code = function(code, language) {
+            const validLang = language || 'code';
+            const escapedCode = code.replace(/"/g, '&quot;');
+            return `
+                <div class="my-4 rounded-xl overflow-hidden border border-gray-700/60 bg-[#1e1e1e] shadow-lg">
+                    <div class="flex items-center justify-between px-4 py-1.5 bg-[#252526] text-gray-400 text-xs font-mono border-b border-gray-700/50">
+                        <span class="flex items-center gap-1.5">
+                            <span class="w-2.5 h-2.5 rounded-full bg-amber-500/80"></span>
+                            <span>${validLang}</span>
+                        </span>
+                        <button onclick="copyToClipboard(this.getAttribute('data-code'))" data-code="${escapedCode}" class="hover:text-white flex items-center gap-1 transition">
+                            <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                            <span>Copy</span>
+                        </button>
+                    </div>
+                    <pre class="p-4 overflow-x-auto text-sm font-mono text-gray-200"><code>${code}</code></pre>
+                </div>
+            `;
+        };
+        marked.use({ renderer });
+
+        // Application Initialization
+        window.addEventListener('DOMContentLoaded', () => {
+            loadSettings();
+            loadThreads();
+            initSpeechRecognition();
+
+            if (!activeThreadId || threads.length === 0) {
+                createNewThread();
+            } else {
+                switchThread(activeThreadId);
+            }
+
+            // Sync Theme
+            if (localStorage.getItem('gemini_theme') === 'light') {
+                document.documentElement.classList.remove('dark');
+                updateThemeUI('light');
+            } else {
+                document.documentElement.classList.add('dark');
+                updateThemeUI('dark');
+            }
+        });
+
+        function loadSettings() {
+            document.getElementById('apiKeyInput').value = apiKey;
+            document.getElementById('systemPromptInput').value = systemPrompt;
+            document.getElementById('modelSelect').value = selectedModel;
+            updateApiKeyBadge();
+        }
+
+        function saveSettings() {
+            apiKey = document.getElementById('apiKeyInput').value.trim();
+            systemPrompt = document.getElementById('systemPromptInput').value.trim();
+            localStorage.setItem('gemini_api_key', apiKey);
+            localStorage.setItem('gemini_system_prompt', systemPrompt);
+            updateApiKeyBadge();
+            closeSettingsModal();
+            showToast('Settings saved successfully!');
+        }
+
+        function updateApiKeyBadge() {
+            const badge = document.getElementById('apiKeyBadge');
+            if (apiKey) {
+                badge.innerText = 'Connected';
+                badge.className = 'text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-medium';
+            } else {
+                badge.innerText = 'Demo Mode';
+                badge.className = 'text-[10px] px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-400 font-medium';
+            }
+        }
+
+        function updateSelectedModel() {
+            selectedModel = document.getElementById('modelSelect').value;
+            localStorage.setItem('gemini_selected_model', selectedModel);
+            showToast(`Switched to ${selectedModel}`);
+        }
+
+        function loadThreads() {
+            const stored = localStorage.getItem('gemini_threads');
+            threads = stored ? JSON.parse(stored) : [];
+            renderSidebarThreads();
+        }
+
+        function saveThreads() {
+            localStorage.setItem('gemini_threads', JSON.stringify(threads));
+            renderSidebarThreads();
+        }
+
+        function createNewThread() {
+            const newThread = {
+                id: 'thread_' + Date.now(),
+                title: 'New Chat',
+                createdAt: new Date().toISOString(),
+                messages: []
+            };
+            threads.unshift(newThread);
+            activeThreadId = newThread.id;
+            saveThreads();
+            renderMessages();
+            document.getElementById('welcomeView').classList.remove('hidden');
+            if (window.innerWidth < 768) toggleSidebar(false);
+        }
+
+        function switchThread(threadId) {
+            activeThreadId = threadId;
+            renderSidebarThreads();
+            renderMessages();
+            if (window.innerWidth < 768) toggleSidebar(false);
+        }
+
+        function deleteThread(threadId, event) {
+            if (event) event.stopPropagation();
+            threads = threads.filter(t => t.id !== threadId);
+            if (activeThreadId === threadId) {
+                activeThreadId = threads.length > 0 ? threads[0].id : null;
+            }
+            saveThreads();
+            if (!activeThreadId) {
+                createNewThread();
+            } else {
+                renderMessages();
+            }
+            showToast('Chat deleted');
+        }
+
+        function renderSidebarThreads() {
+            const container = document.getElementById('threadsList');
+            container.innerHTML = '';
+
+            threads.forEach(thread => {
+                const isActive = thread.id === activeThreadId;
+                const div = document.createElement('div');
+                div.className = `group flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium cursor-pointer transition ${
+                    isActive 
+                        ? 'bg-gemini-accent/15 text-gemini-accent dark:bg-gemini-accent/20' 
+                        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gemini-cardHover'
+                }`;
+                div.onclick = () => switchThread(thread.id);
+
+                div.innerHTML = `
+                    <div class="flex items-center gap-2.5 overflow-hidden">
+                        <i data-lucide="message-square" class="w-4 h-4 shrink-0 ${isActive ? 'text-gemini-accent' : 'text-gray-400'}"></i>
+                        <span class="truncate text-xs md:text-sm">${escapeHtml(thread.title)}</span>
+                    </div>
+                    <button onclick="deleteThread('${thread.id}', event)" class="opacity-0 group-hover:opacity-100 p-1 hover:text-rose-400 text-gray-400 transition" title="Delete">
+                        <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                    </button>
+                `;
+                container.appendChild(div);
+            });
+            lucide.createIcons();
+        }
+
+        function getActiveThread() {
+            return threads.find(t => t.id === activeThreadId);
+        }
+
+        function renderMessages() {
+            const thread = getActiveThread();
+            const container = document.getElementById('messagesList');
+            const welcomeView = document.getElementById('welcomeView');
+
+            container.innerHTML = '';
+
+            if (!thread || thread.messages.length === 0) {
+                welcomeView.classList.remove('hidden');
+                return;
+            }
+
+            welcomeView.classList.add('hidden');
+
+            thread.messages.forEach((msg, idx) => {
+                const msgNode = createMessageNode(msg, idx);
+                container.appendChild(msgNode);
+            });
+
+            lucide.createIcons();
+            scrollToBottom();
+        }
+
+        function createMessageNode(msg, index) {
+            const div = document.createElement('div');
+            const isUser = msg.role === 'user';
+
+            if (isUser) {
+                div.className = "flex justify-end animate-fade-in";
+                let attachmentsHtml = '';
+                if (msg.attachments && msg.attachments.length > 0) {
+                    attachmentsHtml = `
+                        <div class="flex flex-wrap gap-2 mb-2">
+                            ${msg.attachments.map(img => `<img src="${img}" class="w-32 h-32 object-cover rounded-xl border border-gray-600 shadow-sm">`).join('')}
+                        </div>
+                    `;
+                }
+
+                div.innerHTML = `
+                    <div class="max-w-[85%] md:max-w-[75%] bg-gray-100 dark:bg-gemini-userBubble text-gray-900 dark:text-gray-100 px-4 py-3 rounded-2xl rounded-tr-sm shadow-sm">
+                        ${attachmentsHtml}
+                        <p class="text-sm whitespace-pre-wrap">${escapeHtml(msg.text)}</p>
+                    </div>
+                `;
+            } else {
+                div.className = "flex items-start gap-3 animate-fade-in";
+                const renderedHtml = marked.parse(msg.text || '');
+
+                div.innerHTML = `
+                    <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-500 to-indigo-600 flex items-center justify-center shrink-0 shadow mt-1">
+                        <i data-lucide="sparkles" class="w-4 h-4 text-white"></i>
+                    </div>
+                    <div class="flex-1 space-y-2 min-w-0">
+                        <div class="markdown-body text-gray-800 dark:text-gray-200">
+                            ${renderedHtml}
+                        </div>
+
+                        <!-- Response Toolbar Utilities -->
+                        <div class="flex items-center gap-1 text-gray-400 pt-1">
+                            <button onclick="readAloud('${index}')" class="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gemini-cardHover hover:text-gray-200 transition" title="Read Aloud">
+                                <i data-lucide="volume-2" class="w-4 h-4"></i>
+                            </button>
+                            <button onclick="copyToClipboard(\`${escapeForCode(msg.text)}\`)" class="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gemini-cardHover hover:text-gray-200 transition" title="Copy text">
+                                <i data-lucide="copy" class="w-4 h-4"></i>
+                            </button>
+                            <button onclick="giveFeedback('up')" class="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gemini-cardHover hover:text-gray-200 transition" title="Good Response">
+                                <i data-lucide="thumbs-up" class="w-4 h-4"></i>
+                            </button>
+                            <button onclick="giveFeedback('down')" class="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gemini-cardHover hover:text-gray-200 transition" title="Bad Response">
+                                <i data-lucide="thumbs-down" class="w-4 h-4"></i>
+                            </button>
+                            <button onclick="regenerateLastResponse()" class="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gemini-cardHover hover:text-gray-200 transition" title="Regenerate">
+                                <i data-lucide="rotate-cw" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            return div;
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('promptInput');
+            const text = input.value.trim();
+
+            if ((!text && pendingAttachments.length === 0) || isGenerating) return;
+
+            const thread = getActiveThread();
+            if (!thread) return;
+
+            // Auto title thread from first query
+            if (thread.messages.length === 0 && text) {
+                thread.title = text.slice(0, 28) + (text.length > 28 ? '...' : '');
+            }
+
+            // Append User Message
+            const userMsg = {
+                role: 'user',
+                text: text,
+                attachments: [...pendingAttachments]
+            };
+            thread.messages.push(userMsg);
+
+            // Reset input UI
+            input.value = '';
+            autoResizeTextarea(input);
+            pendingAttachments = [];
+            renderAttachmentPreviews();
+            saveThreads();
+            renderMessages();
+
+            // Set loading state
+            isGenerating = true;
+            document.getElementById('typingIndicator').classList.remove('hidden');
+            scrollToBottom();
+
+            // Placeholder AI message
+            const aiMsg = { role: 'model', text: '' };
+            thread.messages.push(aiMsg);
+            const aiMsgIndex = thread.messages.length - 1;
+
+            if (apiKey) {
+                await fetchGeminiStream(thread, aiMsgIndex);
+            } else {
+                await simulateGeminiStream(thread, aiMsgIndex, text);
+            }
+
+            isGenerating = false;
+            document.getElementById('typingIndicator').classList.add('hidden');
+            saveThreads();
+            renderMessages();
+        }
+
+        // Live Gemini API SSE Fetch
+        async function fetchGeminiStream(thread, aiMsgIndex) {
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/${selectedModel}:streamGenerateContent?key=${apiKey}&alt=sse`;
+
+            // Prepare history contents for Gemini endpoint
+            const contents = thread.messages.slice(0, -1).map(m => {
+                const parts = [];
+                if (m.text) parts.push({ text: m.text });
+                if (m.attachments) {
+                    m.attachments.forEach(base64Str => {
+                        const mimeType = base64Str.split(';')[0].split(':')[1] || 'image/png';
+                        const data = base64Str.split(',')[1];
+                        parts.push({
+                            inlineData: { mimeType, data }
+                        });
+                    });
+                }
+                return {
+                    role: m.role === 'model' ? 'model' : 'user',
+                    parts: parts
+                };
+            });
+
+            const payload = {
+                contents: contents,
+                systemInstruction: {
+                    parts: [{ text: systemPrompt }]
+                }
+            };
+
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`API Error ${response.status}: ${await response.text()}`);
+                }
+
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder("utf-8");
+                let buffer = "";
+
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+
+                    buffer += decoder.decode(value, { stream: true });
+                    const lines = buffer.split('\n');
+                    buffer = lines.pop(); // Keep partial chunk
+
+                    for (const line of lines) {
+                        if (line.startsWith('data: ')) {
+                            const jsonStr = line.replace('data: ', '').trim();
+                            if (jsonStr === '[DONE]') continue;
+                            try {
+                                const parsed = JSON.parse(jsonStr);
+                                const candidateText = parsed?.candidates?.[0]?.content?.parts?.[0]?.text;
+                                if (candidateText) {
+                                    thread.messages[aiMsgIndex].text += candidateText;
+                                    renderMessages();
+                                }
+                            } catch (e) {
+                                // Ignore non-json lines
+                            }
+                        }
+                    }
+                }
+            } catch (err) {
+                console.error(err);
+                thread.messages[aiMsgIndex].text = `⚠️ **Error generating response:** ${err.message}\n\n*Falling back to Demo Mode. Check your API key in Settings.*`;
+            }
+        }
+
+        async function simulateGeminiStream(thread, aiMsgIndex, query) {
+            const demoResponses = [
+                `Here is a clean Python solution to demonstrate my capabilities:\n\n\`\`\`python\nimport json\nimport time\n\ndef process_data(payload):\n    # Process data pipeline\n    print("Processing query...")\n    result = {\n        "status": "success",\n        "timestamp": time.time(),\n        "query": payload\n    }\n    return json.dumps(result, indent=2)\n\n# Example execution\nprint(process_data("${escapeForCode(query || "Hello Gemini")}"))\n\`\`\`\n\n### Key Highlights:\n- Fast multimodal stream output\n- Clean error handling\n- Fully browser native without build tools`,
+                `I can assist you with creative writing, complex reasoning, code generation, and analyzing visual inputs!\n\n> **Note:** To connect to live real-time Google models, click the **Key Icon** in the top header or sidebar and paste your Gemini API key!`,
+                `That's a fantastic idea! Here are 3 key points to consider:\n1. **Scalability**: Design for dynamic modular growth.\n2. **User Experience**: Prioritize zero-latency interactive responses.\n3. **Multimodal integration**: Combine visual context with precise text instructions.`
+            ];
+
+            const selectedResponse = demoResponses[Math.floor(Math.random() * demoResponses.length)];
+            const chunks = selectedResponse.split(' ');
+
+            for (let i = 0; i < chunks.length; i++) {
+                thread.messages[aiMsgIndex].text += (i === 0 ? '' : ' ') + chunks[i];
+                renderMessages();
+                await new Promise(res => setTimeout(res, 35));
+            }
+        }
+
+        function regenerateLastResponse() {
+            const thread = getActiveThread();
+            if (!thread || thread.messages.length < 2) return;
+
+            // Remove last assistant response
+            if (thread.messages[thread.messages.length - 1].role === 'model') {
+                thread.messages.pop();
+            }
+
+            const lastUserMsg = thread.messages[thread.messages.length - 1];
+            if (lastUserMsg && lastUserMsg.role === 'user') {
+                isGenerating = true;
+                document.getElementById('typingIndicator').classList.remove('hidden');
+
+                const aiMsg = { role: 'model', text: '' };
+                thread.messages.push(aiMsg);
+                const aiMsgIndex = thread.messages.length - 1;
+
+                if (apiKey) {
+                    fetchGeminiStream(thread, aiMsgIndex).then(() => {
+                        isGenerating = false;
+                        document.getElementById('typingIndicator').classList.add('hidden');
+                        saveThreads();
+                        renderMessages();
+                    });
+                } else {
+                    simulateGeminiStream(thread, aiMsgIndex, lastUserMsg.text).then(() => {
+                        isGenerating = false;
+                        document.getElementById('typingIndicator').classList.add('hidden');
+                        saveThreads();
+                        renderMessages();
+                    });
+                }
+            }
+        }
+
+        function triggerFileUpload() {
+            document.getElementById('fileInput').click();
+        }
+
+        function handleFileSelect(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            if (!file.type.startsWith('image/')) {
+                showToast('Please upload an image file');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                pendingAttachments.push(evt.target.result);
+                renderAttachmentPreviews();
+            };
+            reader.readAsDataURL(file);
+            e.target.value = '';
+        }
+
+        function removeAttachment(index) {
+            pendingAttachments.splice(index, 1);
+            renderAttachmentPreviews();
+        }
+
+        function renderAttachmentPreviews() {
+            const container = document.getElementById('attachmentPreview');
+            if (pendingAttachments.length === 0) {
+                container.classList.add('hidden');
+                container.innerHTML = '';
+                return;
+            }
+
+            container.classList.remove('hidden');
+            container.innerHTML = pendingAttachments.map((img, i) => `
+                <div class="relative group">
+                    <img src="${img}" class="w-14 h-14 object-cover rounded-xl border border-gray-300 dark:border-gemini-border">
+                    <button onclick="removeAttachment(${i})" class="absolute -top-1.5 -right-1.5 bg-rose-500 text-white rounded-full p-0.5 shadow hover:bg-rose-600 transition">
+                        <i data-lucide="x" class="w-3 h-3"></i>
+                    </button>
+                </div>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        function initSpeechRecognition() {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRecognition) {
+                document.getElementById('micBtn').style.display = 'none';
+                return;
+            }
+
+            recognition = new SpeechRecognition();
+            recognition.continuous = false;
+            recognition.interimResults = true;
+
+            recognition.onstart = () => {
+                isMicActive = true;
+                document.getElementById('micBtn').classList.add('text-rose-500', 'mic-active');
+                showToast('Listening...');
+            };
+
+            recognition.onresult = (event) => {
+                let transcript = '';
+                for (let i = event.resultIndex; i < event.results.length; i++) {
+                    transcript += event.results[i][0].transcript;
+                }
+                const input = document.getElementById('promptInput');
+                input.value = transcript;
+                autoResizeTextarea(input);
+            };
+
+            recognition.onerror = () => {
+                stopMic();
+            };
+
+            recognition.onend = () => {
+                stopMic();
+            };
+        }
+
+        function toggleVoiceInput() {
+            if (!recognition) return;
+            if (isMicActive) {
+                recognition.stop();
+                stopMic();
+            } else {
+                recognition.start();
+            }
+        }
+
+        function stopMic() {
+            isMicActive = false;
+            const btn = document.getElementById('micBtn');
+            if (btn) btn.classList.remove('text-rose-500', 'mic-active');
+        }
+
+        function readAloud(index) {
+            const thread = getActiveThread();
+            if (!thread || !thread.messages[index]) return;
+
+            if (speechSynth.speaking) {
+                speechSynth.cancel();
+                showToast('Stopped reading');
+                return;
+            }
+
+            const cleanText = thread.messages[index].text.replace(/[#*`_]/g, '');
+            speechUtterance = new SpeechSynthesisUtterance(cleanText);
+            speechUtterance.rate = 1.0;
+            speechSynth.speak(speechUtterance);
+            showToast('Reading aloud...');
+        }
+
+        function usePromptSuggestion(promptText) {
+            const input = document.getElementById('promptInput');
+            input.value = promptText;
+            autoResizeTextarea(input);
+            sendMessage();
+        }
+
+        function handleKeyDown(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        }
+
+        function autoResizeTextarea(el) {
+            el.style.height = 'auto';
+            el.style.height = el.scrollHeight + 'px';
+        }
+
+        function toggleSidebar(forceState) {
+            const sidebar = document.getElementById('sidebar');
+            const backdrop = document.getElementById('mobileBackdrop');
+
+            if (forceState !== undefined) {
+                if (forceState) {
+                    sidebar.classList.remove('-translate-x-full');
+                    backdrop.classList.remove('hidden');
+                } else {
+                    sidebar.classList.add('-translate-x-full');
+                    backdrop.classList.add('hidden');
+                }
+                return;
+            }
+
+            sidebar.classList.toggle('-translate-x-full');
+            backdrop.classList.toggle('hidden');
+        }
+
+        function toggleTheme() {
+            const isDark = document.documentElement.classList.toggle('dark');
+            const theme = isDark ? 'dark' : 'light';
+            localStorage.setItem('gemini_theme', theme);
+            updateThemeUI(theme);
+        }
+
+        function updateThemeUI(theme) {
+            const icon = document.getElementById('themeIcon');
+            const text = document.getElementById('themeText');
+            if (theme === 'dark') {
+                icon.setAttribute('data-lucide', 'moon');
+                text.innerText = 'Dark Mode';
+            } else {
+                icon.setAttribute('data-lucide', 'sun');
+                text.innerText = 'Light Mode';
+            }
+            lucide.createIcons();
+        }
+
+        function openSettingsModal() {
+            document.getElementById('settingsModal').classList.remove('hidden');
+        }
+
+        function closeSettingsModal() {
+            document.getElementById('settingsModal').classList.add('hidden');
+        }
+
+        function clearAllData() {
+            localStorage.clear();
+            threads = [];
+            activeThreadId = null;
+            createNewThread();
+            closeSettingsModal();
+            showToast('Cleared all local data');
+        }
+
+        function copyToClipboard(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            showToast('Copied to clipboard');
+        }
+
+        function giveFeedback(type) {
+            showToast(type === 'up' ? 'Feedback recorded! 👍' : 'Feedback recorded! 👎');
+        }
+
+        function scrollToBottom() {
+            const container = document.getElementById('chatContainer');
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').innerText = msg;
+            toast.classList.remove('opacity-0', 'pointer-events-none');
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'pointer-events-none');
+            }, 2500);
+        }
+
+        function escapeHtml(str) {
+            return str.replace(/&/g, "&amp;")
+                      .replace(/</g, "&lt;")
+                      .replace(/>/g, "&gt;")
+                      .replace(/"/g, "&quot;")
+                      .replace(/'/g, "&#039;");
+        }
+
+        function escapeForCode(str) {
+            return str.replace(/`/g, '\\`').replace(/\\/g, '\\\\');
+        }
+    </script>
+</body>
+</html>
